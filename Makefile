@@ -1,6 +1,8 @@
 CURRENT_DIR = $(shell pwd)
 CLAB_NAME ?= test_lab
 DOCKER_NAME ?= test_clab
+_UID = $(shell id -u)
+_GID = $(shell id -g)
 
 .PHONY: help
 help: ## Display help message
@@ -8,7 +10,7 @@ help: ## Display help message
 
 .PHONY: build
 build: ## Build docker image
-	docker build --rm --pull -t $(DOCKER_NAME):latest -f $(CURRENT_DIR)/.devcontainer/Dockerfile .
+	docker build --rm --pull --build-arg UID=$(_UID) --build-arg GID=$(_GID) -t $(DOCKER_NAME):latest -f $(CURRENT_DIR)/.devcontainer/Dockerfile .
 
 # .PHONY: clab_deploy
 # clab_deploy: ## Deploy ceos lab
