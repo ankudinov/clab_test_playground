@@ -32,8 +32,8 @@ RUN curl -fsSL https://get.docker.com | sh \
 RUN bash -c "$(curl -sL https://get.containerlab.dev)"
 
 # add non-root user
-RUN useradd -md /home/avd -s /bin/zsh -u ${_UID} ${_UNAME} \
-    && echo '${_UNAME} ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+RUN useradd -md /home/${_UNAME} -s /bin/zsh -u ${_UID} ${_UNAME} -g ${_GID} \
+    && echo "${_UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     # add docker and sudo to avd group
     && usermod -aG docker ${_UNAME} \
     && usermod -aG sudo ${_UNAME}
@@ -55,3 +55,14 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
     && echo "export LC_ALL=C.UTF-8" >> $HOME/.zshrc \
     && echo "export LANG=C.UTF-8" >> $HOME/.zshrc \
     && echo 'export PATH=$PATH:/home/avd/.local/bin' >> $HOME/.zshrc
+
+# add entrypoint script
+COPY .devcontainer/entrypoint.sh /bin/entrypoint.sh
+RUN sudo chmod +x /bin/entrypoint.sh
+# use ENTRYPOINT instead of CMD to ensure that entryscript is always executed
+ENTRYPOINT [ "/bin/entrypoint.sh" ]
+
+# add AVD gitconfig to be used if container is not called as VScode devcontainer
+COPY .devcontainer/gitconfig /home/avd/gitconfig-avd-base-template
+
+WORKDIR /home/${_UNAME}/projects
