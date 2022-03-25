@@ -88,3 +88,14 @@ clab_interactive: ## start interactive clab container
 		-w /home \
 		-v $(CURRENT_DIR):/home \
 		test_clab:latest bash
+
+.PHONY: test
+test: ## some random tests
+	docker run --rm -it --privileged \
+		--network host \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v /etc/hosts:/etc/hosts \
+		--pid="host" \
+		-w /home \
+		-v $(CURRENT_DIR):/home \
+		test_clab:latest echo "\ntest" >> /etc/hosts
