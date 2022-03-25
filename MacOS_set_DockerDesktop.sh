@@ -6,6 +6,9 @@
 # REQUIREMENTS:
 # - Homebrew
 
+# In case of problems try:
+# - brew doctor
+
 # just in case your forgot to backup Docker Desktop settings
 # if it's all broken, reset Docker Desktop settings
 cp ~/Library/Group\ Containers/group.com.docker/settings.json docker_desktop_settings_$(date "+%Y.%m.%d-%H.%M.%S").json
