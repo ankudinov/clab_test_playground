@@ -31,7 +31,6 @@ clab_deploy: ## Deploy ceos lab
 		--pid="host" \
 		-w /home \
 		-v $(CURRENT_DIR):/home \
-		-v $(CURRENT_DIR)/99-zceos.conf:/etc/sysctl.d/99-zceos.conf \
 		test_clab:latest containerlab deploy --debug --topo $(CLAB_NAME).clab.yml --max-workers 2 --timeout 5m
 
 .PHONY: clab_direct_deploy
@@ -47,7 +46,6 @@ clab_scale_deploy: ## Deploy ceos lab
 		--pid="host" \
 		-w /home \
 		-v $(CURRENT_DIR):/home \
-		-v $(CURRENT_DIR)/99-zceos.conf:/etc/sysctl.d/99-zceos.conf \
 		test_clab:latest containerlab deploy --debug --topo $(CLAB_NAME)_scale.clab.yml --max-workers 2 --timeout 5m
 
 .PHONY: clab_direct_scale_deploy
@@ -63,7 +61,6 @@ clab_destroy: ## Destroy ceos lab
 		--pid="host" \
 		-w /home \
 		-v $(CURRENT_DIR):/home \
-		-v $(CURRENT_DIR)/99-zceos.conf:/etc/sysctl.d/99-zceos.conf \
 		test_clab:latest containerlab destroy --debug --topo $(CLAB_NAME).clab.yml --cleanup
 
 .PHONY: clab_scale_destroy
@@ -75,7 +72,6 @@ clab_scale_destroy: ## Destroy ceos lab
 		--pid="host" \
 		-w /home \
 		-v $(CURRENT_DIR):/home \
-		-v $(CURRENT_DIR)/99-zceos.conf:/etc/sysctl.d/99-zceos.conf \
 		test_clab:latest containerlab destroy --debug --topo $(CLAB_NAME)_scale.clab.yml --cleanup
 
 .PHONY: clab_interactive
