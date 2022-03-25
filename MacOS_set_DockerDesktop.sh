@@ -21,6 +21,8 @@ test -z "$(brew list | grep moreutils 2>/dev/null)" && brew install moreutils
 jq '.deprecatedCgroupv1 = true' ~/Library/Group\ Containers/group.com.docker/settings.json | sponge ~/Library/Group\ Containers/group.com.docker/settings.json
 jq '.filesharingDirectories += ["/var/run/docker.sock"]' ~/Library/Group\ Containers/group.com.docker/settings.json | sponge ~/Library/Group\ Containers/group.com.docker/settings.json
 jq '.filesharingDirectories += ["/etc/hosts"]' ~/Library/Group\ Containers/group.com.docker/settings.json | sponge ~/Library/Group\ Containers/group.com.docker/settings.json
+# on MacOS /etc -> /private/etc
+jq '.filesharingDirectories += ["/private/etc/hosts"]' ~/Library/Group\ Containers/group.com.docker/settings.json | sponge ~/Library/Group\ Containers/group.com.docker/settings.json
 
 # add home path to sharing list as Docker Desktop on MacOS will be confused by internal container path otherwise
 jq '.filesharingDirectories += ["/home"]' ~/Library/Group\ Containers/group.com.docker/settings.json | sponge ~/Library/Group\ Containers/group.com.docker/settings.json
