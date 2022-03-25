@@ -1,0 +1,265 @@
+name: test_lab
+
+mgmt:
+  network: custom_mgmt
+  ipv4_subnet: 192.168.123.0/24
+
+topology:
+  kinds:
+    ceos:
+      startup-config: init-configs/ceos-cfg.j2
+      image: ceos-lab:4.27.0F
+      binds:
+      # when cEOS starts, it reduces system fs.inotify.max_user_instances to 1256 - this number is too small
+      - /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro
+  defaults:
+    kind: ceos
+  nodes:
+    a_hub:
+      mgmt_ipv4: 192.168.123.11
+    s1:
+      mgmt_ipv4: 192.168.123.101
+    s2:
+      mgmt_ipv4: 192.168.123.102
+    s3:
+      mgmt_ipv4: 192.168.123.103
+    s4:
+      mgmt_ipv4: 192.168.123.104
+    s5:
+      mgmt_ipv4: 192.168.123.105
+    s6:
+      mgmt_ipv4: 192.168.123.106
+    s7:
+      mgmt_ipv4: 192.168.123.107
+    s8:
+      mgmt_ipv4: 192.168.123.108
+    s9:
+      mgmt_ipv4: 192.168.123.109
+    s10:
+      mgmt_ipv4: 192.168.123.110
+    s11:
+      mgmt_ipv4: 192.168.123.111
+    s12:
+      mgmt_ipv4: 192.168.123.112
+    s13:
+      mgmt_ipv4: 192.168.123.113
+    s14:
+      mgmt_ipv4: 192.168.123.114
+    s15:
+      mgmt_ipv4: 192.168.123.115
+    s16:
+      mgmt_ipv4: 192.168.123.116
+    s17:
+      mgmt_ipv4: 192.168.123.117
+    s18:
+      mgmt_ipv4: 192.168.123.118
+    s19:
+      mgmt_ipv4: 192.168.123.119
+    s20:
+      mgmt_ipv4: 192.168.123.120
+    s21:
+      mgmt_ipv4: 192.168.123.121
+    s22:
+      mgmt_ipv4: 192.168.123.122
+    s23:
+      mgmt_ipv4: 192.168.123.123
+    s24:
+      mgmt_ipv4: 192.168.123.124
+    s25:
+      mgmt_ipv4: 192.168.123.125
+    s26:
+      mgmt_ipv4: 192.168.123.126
+    s27:
+      mgmt_ipv4: 192.168.123.127
+    s28:
+      mgmt_ipv4: 192.168.123.128
+    s29:
+      mgmt_ipv4: 192.168.123.129
+    s30:
+      mgmt_ipv4: 192.168.123.130
+    s31:
+      mgmt_ipv4: 192.168.123.131
+    s32:
+      mgmt_ipv4: 192.168.123.132
+    s33:
+      mgmt_ipv4: 192.168.123.133
+    s34:
+      mgmt_ipv4: 192.168.123.134
+    s35:
+      mgmt_ipv4: 192.168.123.135
+    s36:
+      mgmt_ipv4: 192.168.123.136
+    s37:
+      mgmt_ipv4: 192.168.123.137
+    s38:
+      mgmt_ipv4: 192.168.123.138
+    s39:
+      mgmt_ipv4: 192.168.123.139
+    s40:
+      mgmt_ipv4: 192.168.123.140
+
+  links:
+  # first 40 links
+  - endpoints: ["a_hub:eth1_1_1", "s1:eth1_1"]
+  - endpoints: ["a_hub:eth1_2_1", "s2:eth1_1"]
+  - endpoints: ["a_hub:eth1_3_1", "s3:eth1_1"]
+  - endpoints: ["a_hub:eth1_4_1", "s4:eth1_1"]
+  - endpoints: ["a_hub:eth1_5_1", "s5:eth1_1"]
+  - endpoints: ["a_hub:eth1_6_1", "s6:eth1_1"]
+  - endpoints: ["a_hub:eth1_7_1", "s7:eth1_1"]
+  - endpoints: ["a_hub:eth1_8_1", "s8:eth1_1"]
+  - endpoints: ["a_hub:eth1_9_1", "s9:eth1_1"]
+  - endpoints: ["a_hub:eth1_10_1", "s10:eth1_1"]
+  - endpoints: ["a_hub:eth2_1_1", "s11:eth1_1"]
+  - endpoints: ["a_hub:eth2_2_1", "s12:eth1_1"]
+  - endpoints: ["a_hub:eth2_3_1", "s13:eth1_1"]
+  - endpoints: ["a_hub:eth2_4_1", "s14:eth1_1"]
+  - endpoints: ["a_hub:eth2_5_1", "s15:eth1_1"]
+  - endpoints: ["a_hub:eth2_6_1", "s16:eth1_1"]
+  - endpoints: ["a_hub:eth2_7_1", "s17:eth1_1"]
+  - endpoints: ["a_hub:eth2_8_1", "s18:eth1_1"]
+  - endpoints: ["a_hub:eth2_9_1", "s19:eth1_1"]
+  - endpoints: ["a_hub:eth2_10_1", "s20:eth1_1"]
+  - endpoints: ["a_hub:eth3_1_1", "s21:eth1_1"]
+  - endpoints: ["a_hub:eth3_2_1", "s22:eth1_1"]
+  - endpoints: ["a_hub:eth3_3_1", "s23:eth1_1"]
+  - endpoints: ["a_hub:eth3_4_1", "s24:eth1_1"]
+  - endpoints: ["a_hub:eth3_5_1", "s25:eth1_1"]
+  - endpoints: ["a_hub:eth3_6_1", "s26:eth1_1"]
+  - endpoints: ["a_hub:eth3_7_1", "s27:eth1_1"]
+  - endpoints: ["a_hub:eth3_8_1", "s28:eth1_1"]
+  - endpoints: ["a_hub:eth3_9_1", "s29:eth1_1"]
+  - endpoints: ["a_hub:eth3_10_1", "s30:eth1_1"]
+  - endpoints: ["a_hub:eth4_1_1", "s31:eth1_1"]
+  - endpoints: ["a_hub:eth4_2_1", "s32:eth1_1"]
+  - endpoints: ["a_hub:eth4_3_1", "s33:eth1_1"]
+  - endpoints: ["a_hub:eth4_4_1", "s34:eth1_1"]
+  - endpoints: ["a_hub:eth4_5_1", "s35:eth1_1"]
+  - endpoints: ["a_hub:eth4_6_1", "s36:eth1_1"]
+  - endpoints: ["a_hub:eth4_7_1", "s37:eth1_1"]
+  - endpoints: ["a_hub:eth4_8_1", "s38:eth1_1"]
+  - endpoints: ["a_hub:eth4_9_1", "s39:eth1_1"]
+  - endpoints: ["a_hub:eth4_10_1", "s40:eth1_1"]
+  # 40 links more
+  - endpoints: ["a_hub:eth1_11_1", "s1:eth2_1"]
+  - endpoints: ["a_hub:eth1_12_1", "s2:eth2_1"]
+  - endpoints: ["a_hub:eth1_13_1", "s3:eth2_1"]
+  - endpoints: ["a_hub:eth1_14_1", "s4:eth2_1"]
+  - endpoints: ["a_hub:eth1_15_1", "s5:eth2_1"]
+  - endpoints: ["a_hub:eth1_16_1", "s6:eth2_1"]
+  - endpoints: ["a_hub:eth1_17_1", "s7:eth2_1"]
+  - endpoints: ["a_hub:eth1_18_1", "s8:eth2_1"]
+  - endpoints: ["a_hub:eth1_19_1", "s9:eth2_1"]
+  - endpoints: ["a_hub:eth1_20_1", "s10:eth2_1"]
+  - endpoints: ["a_hub:eth2_11_1", "s11:eth2_1"]
+  - endpoints: ["a_hub:eth2_12_1", "s12:eth2_1"]
+  - endpoints: ["a_hub:eth2_13_1", "s13:eth2_1"]
+  - endpoints: ["a_hub:eth2_14_1", "s14:eth2_1"]
+  - endpoints: ["a_hub:eth2_15_1", "s15:eth2_1"]
+  - endpoints: ["a_hub:eth2_16_1", "s16:eth2_1"]
+  - endpoints: ["a_hub:eth2_17_1", "s17:eth2_1"]
+  - endpoints: ["a_hub:eth2_18_1", "s18:eth2_1"]
+  - endpoints: ["a_hub:eth2_19_1", "s19:eth2_1"]
+  - endpoints: ["a_hub:eth2_20_1", "s20:eth2_1"]
+  - endpoints: ["a_hub:eth3_11_1", "s21:eth2_1"]
+  - endpoints: ["a_hub:eth3_12_1", "s22:eth2_1"]
+  - endpoints: ["a_hub:eth3_13_1", "s23:eth2_1"]
+  - endpoints: ["a_hub:eth3_14_1", "s24:eth2_1"]
+  - endpoints: ["a_hub:eth3_15_1", "s25:eth2_1"]
+  - endpoints: ["a_hub:eth3_16_1", "s26:eth2_1"]
+  - endpoints: ["a_hub:eth3_17_1", "s27:eth2_1"]
+  - endpoints: ["a_hub:eth3_18_1", "s28:eth2_1"]
+  - endpoints: ["a_hub:eth3_19_1", "s29:eth2_1"]
+  - endpoints: ["a_hub:eth3_20_1", "s30:eth2_1"]
+  - endpoints: ["a_hub:eth4_11_1", "s31:eth2_1"]
+  - endpoints: ["a_hub:eth4_12_1", "s32:eth2_1"]
+  - endpoints: ["a_hub:eth4_13_1", "s33:eth2_1"]
+  - endpoints: ["a_hub:eth4_14_1", "s34:eth2_1"]
+  - endpoints: ["a_hub:eth4_15_1", "s35:eth2_1"]
+  - endpoints: ["a_hub:eth4_16_1", "s36:eth2_1"]
+  - endpoints: ["a_hub:eth4_17_1", "s37:eth2_1"]
+  - endpoints: ["a_hub:eth4_18_1", "s38:eth2_1"]
+  - endpoints: ["a_hub:eth4_19_1", "s39:eth2_1"]
+  - endpoints: ["a_hub:eth4_20_1", "s40:eth2_1"]
+  # 40 links more
+  - endpoints: ["a_hub:eth1_21_1", "s1:eth3_1"]
+  - endpoints: ["a_hub:eth1_22_1", "s2:eth3_1"]
+  - endpoints: ["a_hub:eth1_23_1", "s3:eth3_1"]
+  - endpoints: ["a_hub:eth1_24_1", "s4:eth3_1"]
+  - endpoints: ["a_hub:eth1_25_1", "s5:eth3_1"]
+  - endpoints: ["a_hub:eth1_26_1", "s6:eth3_1"]
+  - endpoints: ["a_hub:eth1_27_1", "s7:eth3_1"]
+  - endpoints: ["a_hub:eth1_28_1", "s8:eth3_1"]
+  - endpoints: ["a_hub:eth1_29_1", "s9:eth3_1"]
+  - endpoints: ["a_hub:eth1_30_1", "s10:eth3_1"]
+  - endpoints: ["a_hub:eth2_21_1", "s11:eth3_1"]
+  - endpoints: ["a_hub:eth2_22_1", "s12:eth3_1"]
+  - endpoints: ["a_hub:eth2_23_1", "s13:eth3_1"]
+  - endpoints: ["a_hub:eth2_24_1", "s14:eth3_1"]
+  - endpoints: ["a_hub:eth2_25_1", "s15:eth3_1"]
+  - endpoints: ["a_hub:eth2_26_1", "s16:eth3_1"]
+  - endpoints: ["a_hub:eth2_27_1", "s17:eth3_1"]
+  - endpoints: ["a_hub:eth2_28_1", "s18:eth3_1"]
+  - endpoints: ["a_hub:eth2_29_1", "s19:eth3_1"]
+  - endpoints: ["a_hub:eth2_30_1", "s20:eth3_1"]
+  - endpoints: ["a_hub:eth3_21_1", "s21:eth3_1"]
+  - endpoints: ["a_hub:eth3_22_1", "s22:eth3_1"]
+  - endpoints: ["a_hub:eth3_23_1", "s23:eth3_1"]
+  - endpoints: ["a_hub:eth3_24_1", "s24:eth3_1"]
+  - endpoints: ["a_hub:eth3_25_1", "s25:eth3_1"]
+  - endpoints: ["a_hub:eth3_26_1", "s26:eth3_1"]
+  - endpoints: ["a_hub:eth3_27_1", "s27:eth3_1"]
+  - endpoints: ["a_hub:eth3_28_1", "s28:eth3_1"]
+  - endpoints: ["a_hub:eth3_29_1", "s29:eth3_1"]
+  - endpoints: ["a_hub:eth3_30_1", "s30:eth3_1"]
+  - endpoints: ["a_hub:eth4_21_1", "s31:eth3_1"]
+  - endpoints: ["a_hub:eth4_22_1", "s32:eth3_1"]
+  - endpoints: ["a_hub:eth4_23_1", "s33:eth3_1"]
+  - endpoints: ["a_hub:eth4_24_1", "s34:eth3_1"]
+  - endpoints: ["a_hub:eth4_25_1", "s35:eth3_1"]
+  - endpoints: ["a_hub:eth4_26_1", "s36:eth3_1"]
+  - endpoints: ["a_hub:eth4_27_1", "s37:eth3_1"]
+  - endpoints: ["a_hub:eth4_28_1", "s38:eth3_1"]
+  - endpoints: ["a_hub:eth4_29_1", "s39:eth3_1"]
+  - endpoints: ["a_hub:eth4_30_1", "s40:eth3_1"]
+  # 40 links more
+  - endpoints: ["a_hub:eth1_31_1", "s1:eth4_1"]
+  - endpoints: ["a_hub:eth1_32_1", "s2:eth4_1"]
+  - endpoints: ["a_hub:eth1_33_1", "s3:eth4_1"]
+  - endpoints: ["a_hub:eth1_34_1", "s4:eth4_1"]
+  - endpoints: ["a_hub:eth1_35_1", "s5:eth4_1"]
+  - endpoints: ["a_hub:eth1_36_1", "s6:eth4_1"]
+  - endpoints: ["a_hub:eth1_37_1", "s7:eth4_1"]
+  - endpoints: ["a_hub:eth1_38_1", "s8:eth4_1"]
+  - endpoints: ["a_hub:eth1_39_1", "s9:eth4_1"]
+  - endpoints: ["a_hub:eth1_40_1", "s10:eth4_1"]
+  - endpoints: ["a_hub:eth2_31_1", "s11:eth4_1"]
+  - endpoints: ["a_hub:eth2_32_1", "s12:eth4_1"]
+  - endpoints: ["a_hub:eth2_33_1", "s13:eth4_1"]
+  - endpoints: ["a_hub:eth2_34_1", "s14:eth4_1"]
+  - endpoints: ["a_hub:eth2_35_1", "s15:eth4_1"]
+  - endpoints: ["a_hub:eth2_36_1", "s16:eth4_1"]
+  - endpoints: ["a_hub:eth2_37_1", "s17:eth4_1"]
+  - endpoints: ["a_hub:eth2_38_1", "s18:eth4_1"]
+  - endpoints: ["a_hub:eth2_39_1", "s19:eth4_1"]
+  - endpoints: ["a_hub:eth2_40_1", "s20:eth4_1"]
+  - endpoints: ["a_hub:eth3_31_1", "s21:eth4_1"]
+  - endpoints: ["a_hub:eth3_32_1", "s22:eth4_1"]
+  - endpoints: ["a_hub:eth3_33_1", "s23:eth4_1"]
+  - endpoints: ["a_hub:eth3_34_1", "s24:eth4_1"]
+  - endpoints: ["a_hub:eth3_35_1", "s25:eth4_1"]
+  - endpoints: ["a_hub:eth3_36_1", "s26:eth4_1"]
+  - endpoints: ["a_hub:eth3_37_1", "s27:eth4_1"]
+  - endpoints: ["a_hub:eth3_38_1", "s28:eth4_1"]
+  - endpoints: ["a_hub:eth3_39_1", "s29:eth4_1"]
+  - endpoints: ["a_hub:eth3_40_1", "s30:eth4_1"]
+  - endpoints: ["a_hub:eth4_31_1", "s31:eth4_1"]
+  - endpoints: ["a_hub:eth4_32_1", "s32:eth4_1"]
+  - endpoints: ["a_hub:eth4_33_1", "s33:eth4_1"]
+  - endpoints: ["a_hub:eth4_34_1", "s34:eth4_1"]
+  - endpoints: ["a_hub:eth4_35_1", "s35:eth4_1"]
+  - endpoints: ["a_hub:eth4_36_1", "s36:eth4_1"]
+  - endpoints: ["a_hub:eth4_37_1", "s37:eth4_1"]
+  - endpoints: ["a_hub:eth4_38_1", "s38:eth4_1"]
+  - endpoints: ["a_hub:eth4_39_1", "s39:eth4_1"]
+  - endpoints: ["a_hub:eth4_40_1", "s40:eth4_1"]
