@@ -8,6 +8,8 @@
 
 # In case of problems try:
 # - brew doctor
+# Known issues:
+# - problem with /usr/local/* ownership. To fix: cd /usr/local/; sudo chown -R $(whoami) *
 
 # just in case your forgot to backup Docker Desktop settings
 # if it's all broken, reset Docker Desktop settings
