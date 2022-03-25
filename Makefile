@@ -87,6 +87,19 @@ clab_interactive: ## start interactive clab container
 		-v $(CURRENT_DIR):/home \
 		test_clab:latest bash
 
+.PHONY: run
+run: ## run docker image
+	docker run --rm -it --privileged \
+		--network host \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v /etc/hosts:/etc/hosts \
+		--pid="host" \
+		-w /home \
+		-v $(CURRENT_DIR):/home \
+		-e AVD_GIT_USER="$(shell git config --get user.name)" \
+		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
+		test_clab:latest || true
+
 .PHONY: test
 test: ## some random tests
 	docker run --rm -it --privileged \
