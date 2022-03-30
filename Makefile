@@ -11,7 +11,7 @@ help: ## Display help message
 
 .PHONY: build
 build: ## Build docker image
-	docker build --rm --pull --no-cache --build-arg _UID=$(_UID) --build-arg _GID=$(_GID) -t $(DOCKER_NAME):latest -f $(CURRENT_DIR)/.devcontainer/Dockerfile .
+	docker build --rm --pull --no-cache --build-arg _UNAME=$(_UNAME) --build-arg _UID=$(_UID) --build-arg _GID=$(_GID) -t $(DOCKER_NAME):latest -f $(CURRENT_DIR)/.devcontainer/Dockerfile .
 
 .PHONY: clab_graph
 clab_graph: ## Build lab graph
