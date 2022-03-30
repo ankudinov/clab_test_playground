@@ -28,16 +28,29 @@ clab_graph: ## Build lab graph
 
 .PHONY: clab_deploy
 clab_deploy: ## Deploy ceos lab
-	docker run --rm -it --privileged \
-		--network host \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		-v /etc/hosts:/etc/hosts \
-		--pid="host" \
-		-w /home/$(_UNAME)/projects \
-		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-		-e AVD_GIT_USER="$(shell git config --get user.name)" \
-		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-		$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).clab.yml --max-workers 2 --timeout 5m
+	if [ $(shell uname -s) = 'Darwin' ]; then \
+		docker run --rm -it --privileged \
+			--network host \
+			-v /var/run/docker.sock:/var/run/docker.sock \
+			-v /etc/hosts:/etc/hosts \
+			--pid="host" \
+			-w /home/$(_UNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-e AVD_GIT_USER="$(shell git config --get user.name)" \
+			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
+			$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).darwin.clab.yml --max-workers 2 --timeout 5m;\
+	else \
+		docker run --rm -it --privileged \
+			--network host \
+			-v /var/run/docker.sock:/var/run/docker.sock \
+			-v /etc/hosts:/etc/hosts \
+			--pid="host" \
+			-w /home/$(_UNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-e AVD_GIT_USER="$(shell git config --get user.name)" \
+			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
+			$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).debian.clab.yml --max-workers 2 --timeout 5m;\
+	fi
 
 .PHONY: clab_scale_deploy
 clab_scale_deploy: ## Deploy ceos lab
@@ -102,4 +115,4 @@ test: ## some random tests
 		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-		$(DOCKER_NAME):latest echo "\ntest" >> /etc/hosts
+		$(DOCKER_NAME):latest cat /etc/sysctl.d/99-zceos.conf
