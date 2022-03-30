@@ -8,6 +8,7 @@ ARG _DOCKER_COMPOSE_VERSION="2.3.3"
 # install tools permanently
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+    apt-utils \
     make \
     wget \
     curl \
@@ -32,7 +33,8 @@ RUN curl -fsSL https://get.docker.com | sh \
 RUN bash -c "$(curl -sL https://get.containerlab.dev)"
 
 # add non-root user
-RUN useradd -md /home/${_UNAME} -s /bin/zsh -u ${_UID} ${_UNAME} -g ${_GID} \
+RUN groupadd -g ${_GID} ${_UNAME} \
+    && useradd -md /home/${_UNAME} -s /bin/zsh -u ${_UID} ${_UNAME} -g ${_GID} \
     && echo "${_UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     # add docker and sudo to avd group
     && usermod -aG docker ${_UNAME} \

@@ -47,6 +47,7 @@ clab_deploy: ## Deploy ceos lab
 			--pid="host" \
 			-w /home/$(_UNAME)/projects \
 			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 			-e AVD_GIT_USER="$(shell git config --get user.name)" \
 			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 			$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).debian.clab.yml --max-workers 2 --timeout 5m;\
@@ -86,6 +87,7 @@ clab_destroy: ## Destroy ceos lab
 			--pid="host" \
 			-w /home/$(_UNAME)/projects \
 			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 			-e AVD_GIT_USER="$(shell git config --get user.name)" \
 			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 			test_clab:latest sudo containerlab destroy --debug --topo $(CLAB_NAME).debian.clab.yml --cleanup; \
