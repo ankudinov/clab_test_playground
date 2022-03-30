@@ -54,7 +54,7 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
     && echo 'export TERM=xterm-256color' >>  $HOME/.zshrc \
     && echo "export LC_ALL=C.UTF-8" >> $HOME/.zshrc \
     && echo "export LANG=C.UTF-8" >> $HOME/.zshrc \
-    && echo 'export PATH=$PATH:/home/avd/.local/bin' >> $HOME/.zshrc
+    && echo "export PATH=$PATH:/home/${_UNAME}/.local/bin" >> $HOME/.zshrc
 
 # add entrypoint script
 COPY .devcontainer/entrypoint.sh /bin/entrypoint.sh
@@ -63,7 +63,7 @@ RUN sudo chmod +x /bin/entrypoint.sh
 ENTRYPOINT [ "/bin/entrypoint.sh" ]
 
 # add AVD gitconfig to be used if container is not called as VScode devcontainer
-COPY .devcontainer/gitconfig /home/avd/gitconfig-avd-base-template
+COPY .devcontainer/gitconfig /home/${_UNAME}/gitconfig-avd-base-template
 
 # ^ ^ ^
 # | | |     The section above usually remains unchanged between releases
