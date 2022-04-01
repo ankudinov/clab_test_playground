@@ -1,5 +1,7 @@
 FROM python:3.9.5-slim
 
+ENV _IN_CONTAINER="True"
+
 ARG _UNAME="avd"
 ARG _UID="1000"
 ARG _GID="1000"

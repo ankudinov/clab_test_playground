@@ -29,17 +29,21 @@ clab_graph: ## Build lab graph
 
 .PHONY: clab_deploy
 clab_deploy: ## Deploy ceos lab
-	docker run --rm -it --privileged \
-		--network host \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		-v /etc/hosts:/etc/hosts \
-		--pid="host" \
-		-w /home/$(_UNAME)/projects \
-		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
-		-e AVD_GIT_USER="$(shell git config --get user.name)" \
-		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-		$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).clab.yml --max-workers 2 --timeout 5m
+	if [ "$_IN_CONTAINER" = "True" ]; then \
+		docker run --rm -it --privileged \
+			--network host \
+			-v /var/run/docker.sock:/var/run/docker.sock \
+			-v /etc/hosts:/etc/hosts \
+			--pid="host" \
+			-w /home/$(_UNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
+			-e AVD_GIT_USER="$(shell git config --get user.name)" \
+			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
+			$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).clab.yml --max-workers 2 --timeout 5m ;\
+	else \
+		sudo containerlab deploy --debug --topo $(CLAB_NAME).clab.yml --max-workers 2 --timeout 5m ;\
+	fi
 
 .PHONY: clab_scale_deploy
 clab_scale_deploy: ## Deploy ceos lab
@@ -57,17 +61,21 @@ clab_scale_deploy: ## Deploy ceos lab
 
 .PHONY: clab_destroy
 clab_destroy: ## Destroy ceos lab
-	docker run --rm -it --privileged \
-		--network host \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		-v /etc/hosts:/etc/hosts \
-		--pid="host" \
-		-w /home/$(_UNAME)/projects \
-		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
-		-e AVD_GIT_USER="$(shell git config --get user.name)" \
-		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-		test_clab:latest sudo containerlab destroy --debug --topo $(CLAB_NAME).clab.yml --cleanup
+	if [ "$_IN_CONTAINER" = "True" ]; then \
+		docker run --rm -it --privileged \
+			--network host \
+			-v /var/run/docker.sock:/var/run/docker.sock \
+			-v /etc/hosts:/etc/hosts \
+			--pid="host" \
+			-w /home/$(_UNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
+			-e AVD_GIT_USER="$(shell git config --get user.name)" \
+			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
+			test_clab:latest sudo containerlab destroy --debug --topo $(CLAB_NAME).clab.yml --cleanup ; \
+	else \
+		sudo containerlab destroy --debug --topo $(CLAB_NAME).clab.yml --cleanup ; \
+	fi
 
 .PHONY: clab_scale_destroy
 clab_scale_destroy: ## Destroy ceos lab
