@@ -1,0 +1,43 @@
+{
+	"name": "test_clab",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	"runArgs": [
+		"--network=host",
+        "--pid=host",
+		"--privileged"
+	],
+	"remoteUser": "avd",
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"njpwerner.autodocstring",
+		"piotrpalarz.vscode-gitignore-generator",
+		"streetsidesoftware.code-spell-checker",
+		"igorsbitnev.error-gutters",
+		"mhutchie.git-graph",
+		"donjayamanne.githistory",
+		"eamodio.gitlens",
+		"mechatroner.rainbow-csv",
+		"visualstudioexptteam.vs"
+	],
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind,consistency=cached",
+		"source=/etc/hosts,target=/etc/hosts,type=bind,consistency=cached",
+        "source=/etc/sysctl.d/99-zceos.conf,target=/etc/sysctl.d/99-zceos.conf,type=bind,consistency=cached,readonly"
+	],
+	"settings": {
+		"python.pythonPath": "/usr/local/bin/python",
+		"python.defaultInterpreterPath": "/usr/local/bin/python"
+	},
+	"remoteEnv": {
+		"LOCALWSF": "${localWorkspaceFolder}",
+		"CONTAINERWSF": "${containerWorkspaceFolder}",
+        "AVD_GIT_USER": "${git config --get user.name}",
+        "AVD_GIT_EMAIL": "${git config --get user.email}"
+	},
+	"workspaceMount": "source=${localWorkspaceFolder},target=/home/avd/projects,type=bind",
+	"workspaceFolder": "/home/avd/projects"
+}
