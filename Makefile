@@ -22,36 +22,24 @@ clab_graph: ## Build lab graph
 		--pid="host" \
 		-w /home/$(_UNAME)/projects \
 		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 		$(DOCKER_NAME):latest sudo containerlab graph --topo $(CLAB_NAME).clab.yml
 
 .PHONY: clab_deploy
 clab_deploy: ## Deploy ceos lab
-	if [ $(shell uname -s) = 'Darwin' ]; then \
-		docker run --rm -it --privileged \
-			--network host \
-			-v /var/run/docker.sock:/var/run/docker.sock \
-			-v /etc/hosts:/etc/hosts \
-			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-			-e AVD_GIT_USER="$(shell git config --get user.name)" \
-			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-			$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).darwin.clab.yml --max-workers 2 --timeout 5m;\
-	else \
-		docker run --rm -it --privileged \
-			--network host \
-			-v /var/run/docker.sock:/var/run/docker.sock \
-			-v /etc/hosts:/etc/hosts \
-			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
-			-e AVD_GIT_USER="$(shell git config --get user.name)" \
-			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-			$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).debian.clab.yml --max-workers 2 --timeout 5m;\
-	fi
+	docker run --rm -it --privileged \
+		--network host \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v /etc/hosts:/etc/hosts \
+		--pid="host" \
+		-w /home/$(_UNAME)/projects \
+		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
+		-e AVD_GIT_USER="$(shell git config --get user.name)" \
+		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
+		$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME).debian.clab.yml --max-workers 2 --timeout 5m
 
 .PHONY: clab_scale_deploy
 clab_scale_deploy: ## Deploy ceos lab
@@ -62,36 +50,24 @@ clab_scale_deploy: ## Deploy ceos lab
 		--pid="host" \
 		-w /home/$(_UNAME)/projects \
 		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 		$(DOCKER_NAME):latest sudo containerlab deploy --debug --topo $(CLAB_NAME)_scale.clab.yml --max-workers 2 --timeout 5m
 
 .PHONY: clab_destroy
 clab_destroy: ## Destroy ceos lab
-	if [ $(shell uname -s) = 'Darwin' ]; then \
-		docker run --rm -it --privileged \
-			--network host \
-			-v /var/run/docker.sock:/var/run/docker.sock \
-			-v /etc/hosts:/etc/hosts \
-			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-			-e AVD_GIT_USER="$(shell git config --get user.name)" \
-			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-			test_clab:latest sudo containerlab destroy --debug --topo $(CLAB_NAME).darwin.clab.yml --cleanup; \
-	else \
-		docker run --rm -it --privileged \
-			--network host \
-			-v /var/run/docker.sock:/var/run/docker.sock \
-			-v /etc/hosts:/etc/hosts \
-			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
-			-e AVD_GIT_USER="$(shell git config --get user.name)" \
-			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
-			test_clab:latest sudo containerlab destroy --debug --topo $(CLAB_NAME).debian.clab.yml --cleanup; \
-	fi
+	docker run --rm -it --privileged \
+		--network host \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v /etc/hosts:/etc/hosts \
+		--pid="host" \
+		-w /home/$(_UNAME)/projects \
+		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
+		-e AVD_GIT_USER="$(shell git config --get user.name)" \
+		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
+		test_clab:latest sudo containerlab destroy --debug --topo $(CLAB_NAME).debian.clab.yml --cleanup
 
 .PHONY: clab_scale_destroy
 clab_scale_destroy: ## Destroy ceos lab
@@ -102,6 +78,7 @@ clab_scale_destroy: ## Destroy ceos lab
 		--pid="host" \
 		-w /home/$(_UNAME)/projects \
 		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 		$(DOCKER_NAME):latest sudo containerlab destroy --debug --topo $(CLAB_NAME)_scale.clab.yml --cleanup
@@ -115,6 +92,7 @@ run: ## run docker image
 		--pid="host" \
 		-w /home/$(_UNAME)/projects \
 		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 		$(DOCKER_NAME):latest || true
@@ -128,6 +106,7 @@ test: ## some random tests
 		--pid="host" \
 		-w /home/$(_UNAME)/projects \
 		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 		$(DOCKER_NAME):latest cat /etc/sysctl.d/99-zceos.conf
