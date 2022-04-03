@@ -29,7 +29,7 @@ clab_graph: ## Build lab graph
 
 .PHONY: clab_deploy
 clab_deploy: ## Deploy ceos lab
-	if [ "$_IN_CONTAINER" = "True" ]; then \
+	if [ "${_IN_CONTAINER}" = "True" ]; then \
 		docker run --rm -it --privileged \
 			--network host \
 			-v /var/run/docker.sock:/var/run/docker.sock \
@@ -61,7 +61,7 @@ clab_scale_deploy: ## Deploy ceos lab
 
 .PHONY: clab_destroy
 clab_destroy: ## Destroy ceos lab
-	if [ "$_IN_CONTAINER" = "True" ]; then \
+	if [ "${_IN_CONTAINER}" = "True" ]; then \
 		docker run --rm -it --privileged \
 			--network host \
 			-v /var/run/docker.sock:/var/run/docker.sock \
@@ -100,7 +100,7 @@ run: ## run docker image
 		--pid="host" \
 		-w /home/$(_UNAME)/projects \
 		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
-		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
+		-v $(CURRENT_DIR)/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
 		$(DOCKER_NAME):latest || true

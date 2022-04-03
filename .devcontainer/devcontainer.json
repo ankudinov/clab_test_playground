@@ -26,7 +26,7 @@
 	"mounts": [
 		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind,consistency=cached",
 		"source=/etc/hosts,target=/etc/hosts,type=bind,consistency=cached",
-        "source=/etc/sysctl.d/99-zceos.conf,target=/etc/sysctl.d/99-zceos.conf,type=bind,consistency=cached,readonly"
+        "source=${localWorkspaceFolder}/99-zceos.conf,target=/etc/sysctl.d/99-zceos.conf,type=bind,consistency=cached,readonly"
 	],
 	"settings": {
 		"python.pythonPath": "/usr/local/bin/python",
