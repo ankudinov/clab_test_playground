@@ -35,7 +35,7 @@ RUN curl -fsSL https://get.docker.com | sh \
 RUN bash -c "$(curl -sL https://get.containerlab.dev)"
 
 # add non-root user
-RUN groupadd -g ${_GID} ${_UNAME} \
+RUN groupadd -g ${_GID} ${_UNAME} &>/dev/null \
     && useradd -md /home/${_UNAME} -s /bin/zsh -u ${_UID} ${_UNAME} -g ${_GID} \
     && echo "${_UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     # add docker and sudo to avd group
