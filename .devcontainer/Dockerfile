@@ -98,7 +98,14 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v$
     # install ansible.avd and it's dependencies, ansible.cvp will not be installed as it already exists
     && ansible-galaxy collection install arista.avd:==${_AVD_VERSION} \
     # install community.general to support callback plugins in ansible.cfg, etc.
-    && ansible-galaxy collection install community.general
+    && ansible-galaxy collection install community.general \
+    # install additional requirements specific to this container
+    && pip3 install eos-download
+
+# add token to be used by eos-download
+# the real token must be set on the system with `export ARISTA_TOKEN="<the-token>"`
+# and will be passed to the container during build phase
+ENV ARISTA_TOKEN="None"
 
 # if not running as VScode devcontainer, start in projects
 WORKDIR /home/${_UNAME}/projects

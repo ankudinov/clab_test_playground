@@ -2,7 +2,12 @@
 	"name": "test_clab",
 	"build": {
 		"dockerfile": "Dockerfile",
-		"context": ".."
+		"context": "..",
+		"args": {
+			"_UNAME": "avd",
+			"_UID": "\"$(id -u)\"",
+			"_GID": "\"$(id -g)\""
+		}
 	},
 	"runArgs": [
 		"--network=host",
