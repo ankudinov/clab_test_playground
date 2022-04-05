@@ -1,12 +1,13 @@
 {
 	"name": "test_clab",
+	"initializeCommand": "export _UID=\"$(id -u)\"; export _GID=\"$(id -g)\"; echo $_UID; echo $_GID",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"context": "..",
 		"args": {
 			"_UNAME": "avd",
-			"_UID": "\"$(id -u)\"",
-			"_GID": "\"$(id -g)\""
+			"_UID": "${localEnv:_UID}",
+			"_GID": "${localEnv:_GID}"
 		}
 	},
 	"runArgs": [
