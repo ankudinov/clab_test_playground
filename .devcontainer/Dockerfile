@@ -100,7 +100,7 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v$
     # install community.general to support callback plugins in ansible.cfg, etc.
     && ansible-galaxy collection install community.general \
     # install additional requirements specific to this container
-    && pip3 install eos-download
+    && pip3 install eos-downloader
 
 # add token to be used by eos-download
 # the real token must be set on the system with `export ARISTA_TOKEN="<the-token>"`
