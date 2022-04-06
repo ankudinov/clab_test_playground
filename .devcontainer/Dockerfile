@@ -2,9 +2,9 @@ FROM python:3.9.5-slim
 
 ENV _IN_CONTAINER="True"
 
-ARG _UNAME="avd"
-ARG _UID="1000"
-ARG _GID="1000"
+ARG USERNAME="avd"
+ARG USER_UID=1000
+ARG USER_GID=${USER_UID}
 ARG _DOCKER_COMPOSE_VERSION="2.3.3"
 
 # install tools permanently
@@ -35,17 +35,17 @@ RUN curl -fsSL https://get.docker.com | sh \
 RUN bash -c "$(curl -sL https://get.containerlab.dev)"
 
 # add non-root user
-RUN [ $(getent group ${_GID}) ] || groupadd -g ${_GID} ${_UNAME} \
-    && useradd -md /home/${_UNAME} -s /bin/zsh -u ${_UID} ${_UNAME} -g ${_GID} \
-    && echo "${_UNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+RUN [ $(getent group ${USER_GID}) ] || groupadd -g ${USER_GID} ${USERNAME} \
+    && useradd -md /home/${USERNAME} -s /bin/zsh -u ${USER_UID} ${USERNAME} -g ${USER_GID} \
+    && echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
     # add docker and sudo to avd group
-    && usermod -aG docker ${_UNAME} \
-    && usermod -aG sudo ${_UNAME}
-USER ${_UNAME}
-ENV HOME=/home/${_UNAME}
-ENV PATH=$PATH:/home/${_UNAME}/.local/bin
+    && usermod -aG docker ${USERNAME} \
+    && usermod -aG sudo ${USERNAME}
+USER ${USERNAME}
+ENV HOME=/home/${USERNAME}
+ENV PATH=$PATH:/home/${USERNAME}/.local/bin
 
-WORKDIR /home/${_UNAME}
+WORKDIR /home/${USERNAME}
 
 # install zsh
 RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
@@ -58,7 +58,7 @@ RUN wget --quiet https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/inst
     && echo 'export TERM=xterm-256color' >>  $HOME/.zshrc \
     && echo "export LC_ALL=C.UTF-8" >> $HOME/.zshrc \
     && echo "export LANG=C.UTF-8" >> $HOME/.zshrc \
-    && echo "export PATH=$PATH:/home/${_UNAME}/.local/bin" >> $HOME/.zshrc
+    && echo "export PATH=$PATH:/home/${USERNAME}/.local/bin" >> $HOME/.zshrc
 
 # add entrypoint script
 COPY .devcontainer/entrypoint.sh /bin/entrypoint.sh
@@ -108,4 +108,4 @@ RUN wget --quiet https://raw.githubusercontent.com/aristanetworks/ansible-avd/v$
 ENV ARISTA_TOKEN="None"
 
 # if not running as VScode devcontainer, start in projects
-WORKDIR /home/${_UNAME}/projects
+WORKDIR /home/${USERNAME}/projects

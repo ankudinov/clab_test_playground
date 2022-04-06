@@ -1,9 +1,9 @@
 CURRENT_DIR = $(shell pwd)
 CLAB_NAME ?= test_lab
 DOCKER_NAME ?= test_clab
-_UNAME = avd
-_UID = $(shell id -u)
-_GID = $(shell id -g)
+USERNAME = avd
+USER_UID = $(shell id -u)
+USER_GID = $(shell id -g)
 
 .PHONY: help
 help: ## Display help message
@@ -11,7 +11,7 @@ help: ## Display help message
 
 .PHONY: build
 build: ## Build docker image
-	docker build --rm --pull --no-cache --build-arg _UNAME=$(_UNAME) --build-arg _UID=$(_UID) --build-arg _GID=$(_GID) -t $(DOCKER_NAME):latest -f $(CURRENT_DIR)/.devcontainer/Dockerfile .
+	docker build --rm --pull --no-cache --build-arg USERNAME=$(USERNAME) --build-arg USER_UID=$(USER_UID) --build-arg USER_GID=$(USER_GID) -t $(DOCKER_NAME):latest -f $(CURRENT_DIR)/.devcontainer/Dockerfile .
 
 .PHONY: clab_graph
 clab_graph: ## Build lab graph
@@ -20,8 +20,8 @@ clab_graph: ## Build lab graph
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v /etc/hosts:/etc/hosts \
 		--pid="host" \
-		-w /home/$(_UNAME)/projects \
-		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-w /home/$(USERNAME)/projects \
+		-v $(CURRENT_DIR):/home/$(USERNAME)/projects \
 		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
@@ -37,8 +37,8 @@ clab_deploy: ## Deploy ceos lab
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v /etc/hosts:/etc/hosts \
 			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-w /home/$(USERNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(USERNAME)/projects \
 			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 			-e AVD_GIT_USER="$(shell git config --get user.name)" \
 			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
@@ -55,8 +55,8 @@ clab_scale_deploy: ## Deploy ceos lab
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v /etc/hosts:/etc/hosts \
 			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-w /home/$(USERNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(USERNAME)/projects \
 			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 			-e AVD_GIT_USER="$(shell git config --get user.name)" \
 			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
@@ -73,8 +73,8 @@ clab_destroy: ## Destroy ceos lab
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v /etc/hosts:/etc/hosts \
 			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-w /home/$(USERNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(USERNAME)/projects \
 			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 			-e AVD_GIT_USER="$(shell git config --get user.name)" \
 			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
@@ -91,8 +91,8 @@ clab_scale_destroy: ## Destroy ceos lab
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			-v /etc/hosts:/etc/hosts \
 			--pid="host" \
-			-w /home/$(_UNAME)/projects \
-			-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+			-w /home/$(USERNAME)/projects \
+			-v $(CURRENT_DIR):/home/$(USERNAME)/projects \
 			-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 			-e AVD_GIT_USER="$(shell git config --get user.name)" \
 			-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
@@ -106,8 +106,8 @@ run: ## run docker image
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v /etc/hosts:/etc/hosts \
 		--pid="host" \
-		-w /home/$(_UNAME)/projects \
-		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-w /home/$(USERNAME)/projects \
+		-v $(CURRENT_DIR):/home/$(USERNAME)/projects \
 		-v $(CURRENT_DIR)/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \
@@ -120,8 +120,8 @@ test: ## some random tests
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		-v /etc/hosts:/etc/hosts \
 		--pid="host" \
-		-w /home/$(_UNAME)/projects \
-		-v $(CURRENT_DIR):/home/$(_UNAME)/projects \
+		-w /home/$(USERNAME)/projects \
+		-v $(CURRENT_DIR):/home/$(USERNAME)/projects \
 		-v /etc/sysctl.d/99-zceos.conf:/etc/sysctl.d/99-zceos.conf:ro \
 		-e AVD_GIT_USER="$(shell git config --get user.name)" \
 		-e AVD_GIT_EMAIL="$(shell git config --get user.email)" \

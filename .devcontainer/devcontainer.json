@@ -1,14 +1,8 @@
 {
 	"name": "test_clab",
-	"initializeCommand": "export _UID=\"$(id -u)\"; export _GID=\"$(id -g)\"; echo $_UID; echo $_GID",
 	"build": {
 		"dockerfile": "Dockerfile",
 		"context": "..",
-		"args": {
-			"_UNAME": "avd",
-			"_UID": "${localEnv:_UID}",
-			"_GID": "${localEnv:_GID}"
-		}
 	},
 	"runArgs": [
 		"--network=host",
@@ -40,9 +34,7 @@
 	},
 	"remoteEnv": {
 		"LOCALWSF": "${localWorkspaceFolder}",
-		"CONTAINERWSF": "${containerWorkspaceFolder}",
-        "AVD_GIT_USER": "${git config --get user.name}",
-        "AVD_GIT_EMAIL": "${git config --get user.email}"
+		"CONTAINERWSF": "${containerWorkspaceFolder}"
 	},
 	"workspaceMount": "source=${localWorkspaceFolder},target=/home/avd/projects,type=bind",
 	"workspaceFolder": "/home/avd/projects"
