@@ -11,7 +11,8 @@ help: ## Display help message
 
 .PHONY: build
 build: ## Build docker image
-	docker build --rm --pull --no-cache --build-arg USERNAME=$(USERNAME) --build-arg USER_UID=$(USER_UID) --build-arg USER_GID=$(USER_GID) -t $(DOCKER_NAME):latest -f $(CURRENT_DIR)/.devcontainer/Dockerfile .
+	docker build --rm --pull --no-cache -t avd-quickstart-temp-image -f $(CURRENT_DIR)/.devcontainer/Dockerfile . ; \
+	docker build -f $(CURRENT_DIR)/.devcontainer/updateUID.Dockerfile -t $(DOCKER_NAME):latest --build-arg BASE_IMAGE=avd-quickstart-temp-image --build-arg REMOTE_USER=$(USERNAME) --build-arg NEW_UID=$(USER_UID) --build-arg NEW_GID=$(USER_GID) --build-arg IMAGE_USER=$(USERNAME) .
 
 .PHONY: clab_graph
 clab_graph: ## Build lab graph
